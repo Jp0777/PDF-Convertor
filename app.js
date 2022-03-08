@@ -51,7 +51,6 @@ app.post('/convert', (req, res) => {
             res.attachment(pdfFile);
             var fileStream = s3.getObject(options).createReadStream();
             fileStream.pipe(res);
-            res.send("File downloaded succesfully")
         } catch (err) {
             console.log("From App.js", err)
         }
