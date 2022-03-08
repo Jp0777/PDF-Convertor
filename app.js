@@ -16,8 +16,8 @@ app.get('/', (req, res) => {
 
 const s3 = new aws.S3(
     {
-        accessKeyId: process.env.S3_KEY,
-        secretAccessKey: process.env.S3_SEC
+        accessKeyId: "AKIAVO4H4NVKBCSSKYGL",
+        secretAccessKey: "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"
     }
 );
 
