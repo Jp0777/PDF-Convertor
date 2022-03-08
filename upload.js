@@ -9,10 +9,7 @@ const s3 = new aws.S3(
     }
 );
 
-aws.config.update({
-    secretAccessKey: process.env.S3_SEC,
-    accessKeyId: process.env.S3_KEY
-});
+
 
 const fileFilter = (req, file, cb) => {
     var ext = file.originalname.split('.')[1];
