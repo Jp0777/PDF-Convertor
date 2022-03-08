@@ -19,6 +19,7 @@ const convertToPDF = async (name) => {
 
         const file = await s3.getObject({ Bucket: 'docxuploads', Key: name }).promise()
         const docxBuf = file.Body
+        console.log(docxBuf)
         let pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);
 
         const pdf = await s3.putObject({
