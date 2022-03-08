@@ -1,26 +1,34 @@
-const path = require('path')
-const fs = require('fs').promises;
+const aws = require('aws-sdk')
 const libre = require('libreoffice-convert');
+const res = require('express/lib/response');
 libre.convertAsync = require('util').promisify(libre.convert);
 
+const s3 = new aws.S3(
+    {
+        accessKeyId: "AKIAVO4H4NVKBCSSKYGL",
+        secretAccessKey: "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"
+    }
+);
 
-
-const convertToPDF = async (address, name) => {
+const convertToPDF = async (name) => {
     try {
         const ext = '.pdf'
-        const inputPath = address;
+
         const outputFileName = name.split('.')[0]
 
-        const outputPath = path.join(__dirname, `/PDFS/${outputFileName}${ext}`);
 
-        const docxBuf = await fs.readFile(inputPath);
-
-
+        const file = await s3.getObject({ Bucket: 'docxuploads', Key: name }).promise()
+        const docxBuf = file.Body
         let pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);
 
+        const pdf = await s3.putObject({
+            Bucket: 'docxuploads',
+            Key: outputFileName + ext,
+            Body: pdfBuf
+        }).promise()
 
-        await fs.writeFile(outputPath, pdfBuf);
-        return outputPath
+        return outputFileName + ext;
+
     }
     catch (Exception) {
         console.log("Something went wrong")

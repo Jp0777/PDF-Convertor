@@ -1,46 +1,61 @@
 const express = require('express')
-const multer = require('multer');
+const upload = require('./upload')
+const aws = require("aws-sdk");
+
+const cors = require('cors')
 const app = express();
-const convertToPDF = require('./convertor')
+const convertToPDF = require('./convertor');
+
 
 app.use(express.static('public'))
+app.use(cors())
 app.get('/', (req, res) => {
     res.render("index.ejs")
 })
 
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '/Node/PDF/uploads')
-    },
-    filename: function (req, file, cb) {
-
-        cb(null, file.originalname)
+const s3 = new aws.S3(
+    {
+        accessKeyId: process.env.S3_KEY,
+        secretAccessKey: process.env.S3_SEC
     }
-})
-const upload = multer({
-    storage: storage,
-    fileFilter: function (req, file, cb) {
-        var ext = file.originalname.split('.')[1];
-        if (ext !== 'docx') {
-            return cb(null, false)
+);
+
+
+
+const singleUpload = upload.single('uploaded_file');
+app.post('/convert', (req, res) => {
+
+
+    singleUpload(req, res, async function (err) {
+        try {
+            if (err) {
+                return res.json({
+                    success: false,
+                    errors: {
+                        title: "File Upload Error",
+                        detail: err.message,
+                        error: err,
+                    }
+                });
+            }
+            const pdfFile = await convertToPDF(req.file.originalname)
+
+            // res.send("File Uploaded")
+            // res.send(pdfFile)
+            var options = {
+                Bucket: 'docxuploads',
+                Key: pdfFile,
+            };
+
+            res.attachment(pdfFile);
+            var fileStream = s3.getObject(options).createReadStream();
+            fileStream.pipe(res);
+        } catch (err) {
+            console.log("From App.js", err)
         }
-        cb(null, true)
-    }
-})
 
-app.post('/convert', upload.single('uploaded_file'), async (req, res, next) => {
-    if (req.file) {
-
-        const convertedFile = await convertToPDF(req.file.path, req.file.originalname)
-
-        res.download(convertedFile)
-
-    }
-    else {
-        res.status(500).send("Something went wrong.There might be an issue with the file you uploaded.")
-    }
-
+    })
 })
 
 app.listen(process.env.PORT || 3000, (req, res) => {
