@@ -40,6 +40,7 @@ app.post('/convert', (req, res) => {
                 });
             }
             const pdfFile = await convertToPDF(req.file.originalname)
+            console.log(pdfFile)
             res.send("Converted")
 
             // var options = {
