@@ -30,7 +30,7 @@ const convertToPDF = async (name) => {
 
     }
     catch (Exception) {
-        console.log("Something went wrong")
+        console.log("Something went wrong", Exception)
     }
 }
 
