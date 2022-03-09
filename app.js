@@ -40,17 +40,16 @@ app.post('/convert', (req, res) => {
                 });
             }
             const pdfFile = await convertToPDF(req.file.originalname)
+            res.send("Converted")
 
-            // res.send("File Uploaded")
-            // res.send(pdfFile)
-            var options = {
-                Bucket: 'docxuploads',
-                Key: pdfFile,
-            };
+            // var options = {
+            //     Bucket: 'docxuploads',
+            //     Key: pdfFile,
+            // };
 
-            res.attachment(pdfFile);
-            var fileStream = s3.getObject(options).createReadStream();
-            fileStream.pipe(res);
+            // res.attachment(pdfFile);
+            // var fileStream = s3.getObject(options).createReadStream();
+            // fileStream.pipe(res);
         } catch (err) {
             console.log("From App.js", err)
         }
