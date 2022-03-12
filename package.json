@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "awesome-unoconv": "^1.0.1",
     "aws-sdk": "^2.1088.0",
     "cors": "^2.8.5",
     "docx-pdf": "0.0.1",
@@ -19,6 +20,7 @@
     "multer": "^1.4.4",
     "multer-s3": "^2.10.0",
     "path": "^0.12.7",
+    "pdfjs": "^2.4.7",
     "pdfkit": "^0.13.0",
     "zapoj-office-to-pdf": "^1.0.1"
   }
