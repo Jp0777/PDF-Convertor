@@ -3,8 +3,8 @@ const multer = require('multer');
 const multerS3 = require("multer-s3");
 
 
-var accessKeyId = process.env.S3_KEY;
-var secretAccessKey = process.env.S3_SEC;
+var accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+var secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 const s3 = new aws.S3(
     {

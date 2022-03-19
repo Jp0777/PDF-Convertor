@@ -14,10 +14,6 @@ app.get('/', (req, res) => {
 })
 
 
-
-
-
-
 const singleUpload = upload.single('uploaded_file');
 app.post('/convert', (req, res) => {
 
@@ -36,7 +32,6 @@ app.post('/convert', (req, res) => {
             }
             const pdfFile = await convertToPDF(req.file.originalname)
             console.log(pdfFile)
-            // res.send("Converted")
 
             var options = {
                 Bucket: 'docxuploads',
