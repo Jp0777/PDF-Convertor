@@ -3,13 +3,13 @@ const libre = require('libreoffice-convert');
 libre.convertAsync = require('util').promisify(libre.convert);
 
 
-// var accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-// var secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+var accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+var secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 const s3 = new aws.S3(
     {
-        accessKeyId: "AKIAVO4H4NVKI45IEMLK",
-        secretAccessKey: "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"
+        accessKeyId,
+        secretAccessKey
     }
 );
 
