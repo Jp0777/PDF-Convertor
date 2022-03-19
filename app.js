@@ -1,6 +1,6 @@
 const express = require('express')
 const upload = require('./upload')
-const aws = require("aws-sdk");
+
 
 const cors = require('cors')
 const app = express();
@@ -14,12 +14,7 @@ app.get('/', (req, res) => {
 })
 
 
-const s3 = new aws.S3(
-    {
-        accessKeyId: "AKIAVO4H4NVKBCSSKYGL",
-        secretAccessKey: "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"
-    }
-);
+
 
 
 
@@ -41,16 +36,16 @@ app.post('/convert', (req, res) => {
             }
             const pdfFile = await convertToPDF(req.file.originalname)
             console.log(pdfFile)
-            res.send("Converted")
+            // res.send("Converted")
 
-            // var options = {
-            //     Bucket: 'docxuploads',
-            //     Key: pdfFile,
-            // };
+            var options = {
+                Bucket: 'docxuploads',
+                Key: pdfFile,
+            };
 
-            // res.attachment(pdfFile);
-            // var fileStream = s3.getObject(options).createReadStream();
-            // fileStream.pipe(res);
+            res.attachment(pdfFile);
+            var fileStream = s3.getObject(options).createReadStream();
+            fileStream.pipe(res);
         } catch (err) {
             console.log("From App.js", err)
         }
