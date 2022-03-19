@@ -3,7 +3,7 @@ const multer = require('multer');
 const multerS3 = require("multer-s3");
 
 
-AWS.config.loadFromPath('./config.json');
+aws.config.loadFromPath('./config.json');
 
 
 const s3 = new aws.S3();

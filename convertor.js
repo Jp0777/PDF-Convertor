@@ -2,7 +2,7 @@ const aws = require('aws-sdk')
 const libre = require('libreoffice-convert');
 libre.convertAsync = require('util').promisify(libre.convert);
 
-AWS.config.loadFromPath('./config.json');
+aws.config.loadFromPath('./config.json')
 
 
 const s3 = new aws.S3();
