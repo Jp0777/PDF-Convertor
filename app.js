@@ -1,10 +1,15 @@
 const express = require('express')
 const upload = require('./upload')
-
+const aws = require('aws-sdk')
 
 const cors = require('cors')
 const app = express();
 const convertToPDF = require('./convertor');
+
+aws.config.loadFromPath('./config.json')
+
+
+const s3 = new aws.S3();
 
 
 app.use(express.static('public'))
