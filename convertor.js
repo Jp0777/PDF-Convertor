@@ -2,8 +2,8 @@ const aws = require('aws-sdk')
 const libre = require('libreoffice-convert');
 libre.convertAsync = require('util').promisify(libre.convert);
 
-const secretAccessKey = process.env.secretAccessKey
-const accessKeyId = process.env.accessKeyId
+const secretAccessKey = process.env.S3_SEC
+const accessKeyId = process.env.S3_KEY
 
 
 const s3 = new aws.S3({

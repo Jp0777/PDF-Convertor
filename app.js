@@ -5,8 +5,8 @@ const aws = require('aws-sdk')
 const cors = require('cors')
 const app = express();
 const convertToPDF = require('./convertor');
-const secretAccessKey = process.env.secretAccessKey
-const accessKeyId = process.env.accessKeyId
+const secretAccessKey = process.env.S3_SEC
+const accessKeyId = process.env.S3_KEY
 
 
 const s3 = new aws.S3({
