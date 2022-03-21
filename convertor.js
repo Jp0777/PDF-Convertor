@@ -2,10 +2,14 @@ const aws = require('aws-sdk')
 const libre = require('libreoffice-convert');
 libre.convertAsync = require('util').promisify(libre.convert);
 
-aws.config.loadFromPath('./config.json')
+const secretAccessKey = process.env.secretAccessKey
+const accessKeyId = process.env.accessKeyId
 
 
-const s3 = new aws.S3();
+const s3 = new aws.S3({
+    accessKeyId,
+    secretAccessKey
+});
 
 const convertToPDF = async (name) => {
     try {

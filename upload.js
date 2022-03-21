@@ -3,11 +3,14 @@ const multer = require('multer');
 const multerS3 = require("multer-s3");
 
 
-aws.config.loadFromPath('./config.json');
+const secretAccessKey = process.env.secretAccessKey
+const accessKeyId = process.env.accessKeyId
 
 
-const s3 = new aws.S3();
-
+const s3 = new aws.S3({
+    accessKeyId,
+    secretAccessKey
+});
 
 
 const fileFilter = (req, file, cb) => {
